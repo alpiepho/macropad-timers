@@ -1,0 +1,12 @@
+100, -1, True
+120, -1, True
+140, -1, True
+160, -1, True
+180, -1, True
+200, -1, True
+220, -1, True
+240, -1, True
+260, -1, True
+280, -1, True
+300, -1, True
+0, 1, False
