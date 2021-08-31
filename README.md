@@ -3,14 +3,30 @@
 
 ## Multiple Timers
 
-This a simple circuitpython project that implements a set of 12 independent timers that can be configured
-as count up or down.
+This a simple circuitpython project that implements a set of 12 independent timers that can be configured as count up or down.
 
-It is based on arduino and circuitpython files related to the ADABox019 kit with the MacroPad RS2040.
+It is based on arduino and circuitpython files related to the ADABox019 kit with the MacroPad RS2040:  [MacroPad Overview](https://learn.adafruit.com/adafruit-macropad-rp2040/overview)
+<br>
+<br>
 
-[MacroPad Overview](https://learn.adafruit.com/adafruit-macropad-rp2040/overview)
+## Some Images
 
+Upon Boot with data.txt<br>
+<img src="./timer1.jpg" width="300">
 
+Running 12 timers<br>
+<img src="./timer5.jpg" width="300">
+
+Enter Setup<br>
+<img src="./timer2.jpg" width="300">
+
+Number Timers<br>
+<img src="./timer3.jpg" width="300">
+
+Faster Speed<br>
+<img src="./timer4.jpg" width="300">
+<br>
+<br>
 ## Usage
 
 To configure the timers, press and hold the encoder knob (5-10 seconds) and follow the menu instructions, using the ecoder 
@@ -33,6 +49,8 @@ If data.txt is used, the Macropad will power up and show a number of timers read
 
 Another "fun" feature is turning the encoder know while the timers are running.  This will scale the clock speed by
 the number shown in the upper right.
+<br>
+<br>
 
 ## How it Works
 
@@ -66,6 +84,8 @@ The main loop:
 2. checks menu input
 3. updates timer data structures
 4. diplays those timer structures
+<br>
+<br>
 
 
 ## Learnings
@@ -82,6 +102,16 @@ The main loop:
 - current implementation work, but the timing is not consistent, and not synced to a real clock
 - did figure out how to use time.monotonic_ns() to approximate real time
 - figured out a way to present menues with the display and encoder
+<br>
+<br>
+
+
+## Known Issues
+- The response time of the encoder button is flaky.
+- The long press to reset a time is not as consistent as I would like.
+
+<br>
+<br>
 
 ## Progress List
 
