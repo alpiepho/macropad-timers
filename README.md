@@ -13,11 +13,14 @@ It is based on arduino and circuitpython files related to the ADABox019 kit with
 
 ## Usage
 
-To configure the timers, press the encoder knob and follow the menu instructions, using the ecoder knob for input.
+To configure the timers, press and hold the encoder knob (5-10 seconds) and follow the menu instructions, using the ecoder 
+knob for input.
 
 Once a number of count up/down timers, press the corresonding LED/key to start that timer.  Subsequent key presses
 will pause/resume that timer.  A long push of that key will cause that timer to reset to its original setting in
 a paused state.
+
+Alternately, to start ALL timers press the encoder knob (1 second).  Similarly, you can pause ALL timers by pressing the encoder knob again.
 
 Count up timers will display a solid green led, and dim when paused.  Count down timers will start as green and the 
 color will vary with the percent of time remaining:
@@ -26,22 +29,25 @@ color will vary with the percent of time remaining:
 - orange - between 10-40%
 - red - less that 10%
 
+If data.txt is used, the Macropad will power up and show a number of timers ready to run. 
+
+Another "fun" feature is turning the encoder know while the timers are running.  This will scale the clock speed by
+the number shown in the upper right.
+
 ## How it Works
 
-This was designed around the circuitpython macrpad libraries.  
+This was designed around the circuitpython Macropad libraries.  
 
 The first implementation was actually a command line version to design the basic application and test independent of the Arduino hardware. 
 As the original version was tweaked to fix issues that appeared using the real hardware, a series of "phase" versions was started.
+(These can be found in the repo https://github.com/alpiepho/macropad/timers_cp).
+
+
 
 Files:
 - code.py - main source that should be installed in mounted CIRCUITPY directory
+- data.txt - (optional) pre-setup of timers that can be added to CIRCUITPY directory
 - circuitpython_libs - lib files etc for mounted CIRCUITPY directory to support lib references
-- past/cmdline.py - initial application design
-- past/menu_test1.sh - script to test cmdline.py
-- past/menu_test2.sh - script to test cmdline.py
-- past/cmd_test.py - initial implementation of arduino facing functions identified on cmdline.py
-- past/code_phase1.py - first hardware version that functions
-- past/code_phase2.py - another hardware version that functions
 
 Based on the latest implementation, the application consists of the following areas:
 - library imports
@@ -54,21 +60,12 @@ Based on the latest implementation, the application consists of the following ar
 - "application" setup
 - main loop
 
-Like all Arduino applications, this follows the pattern of setup and loop forever, although there are 2 setup sections.
+Like all Arduino applications, this follows the pattern of setup and loop forever.
 The main loop:
 1. checks buttons
 2. checks menu input
 3. updates timer data structures
 4. diplays those timer structures
-
-As performance issues arose (biggest problem is providing consistent timer rate independent of the number of timers), a
-"LOOP_FACTOR" was added to slow the main loop.  Also the rate of updating each timer is controlled with "DELTA".  Both
-of these are currently set to 1, pending further debug.
-
-Pressing the encoder knob will take the user to a menu to configure the number timers, and the type, start, end sound, for
-each timer.
-
-Once confgiured, each timer runs and updates the leds.  The corresponding keys control each timer as described above.
 
 
 ## Learnings
@@ -76,13 +73,15 @@ Once confgiured, each timer runs and updates the leds.  The corresponding keys c
 - circuitpython is much nicer to use that standard Arduino C code.  
 - circuitpython has decent support in VS Code
 - circuitpython VS Code Serial Monitor is nice, but can hang easily
-- coding the cmdline version made development of concept go pretty fast
+- coding the cmdline version made development of concept go faster
 - macropad libraries easy to use, decent documentation
 - ran into library/hardware limits on button presss, and consistent update speed
 - biggest problem is providing consistent timer rate independent of the number of timers
 - macropad is no longer completely isolated due to tweaks to fix performance issues
 - got sucked into tweaking the on-device code.py to fix timing issues, should have stuck to Progress List
 - current implementation work, but the timing is not consistent, and not synced to a real clock
+- did figure out how to use time.monotonic_ns() to approximate real time
+- figured out a way to present menues with the display and encoder
 
 ## Progress List
 
@@ -157,10 +156,8 @@ Once confgiured, each timer runs and updates the leds.  The corresponding keys c
 - [done] turn on full timer application
 - [done] CONSTANTS
 - [done] update README for how it works and how to use it
-
-
-- gather needed libs AND other files
-- review for refactor
-- debug consistent rate independent of number timers running (use DEBUG)
-- debug rate vs real time
-- persist settings?
+- [done] gather needed libs AND other files
+- [done] review for refactor
+- [done] debug consistent rate independent of number timers running (use DEBUG)
+- [done] debug rate vs real time
+- [defer] persist settings? (saving requires changing the SD card access mode, too complicated for this project)
